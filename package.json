@@ -9,7 +9,9 @@
   "author": "Assassin4791@mail.ru",
   "license": "ISC",
   "dependencies": {
+    "coffee-script": "^1.10.0",
     "exec": "^0.2.1",
+    "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-jimp": "^1.2.3",
     "gulp-rm": "^1.0.1",

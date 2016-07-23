@@ -9,7 +9,7 @@ states = require('./config.coffee').states
 
 waitState = (state, path, name, condition) ->
   defered = q.defer()
-  console.warn "start wate state #{name}"
+  console.warn "start wait state #{name}"
   timerId = setTimeout q.reject, 15000
 
   checkState = (state, path) ->
@@ -36,6 +36,7 @@ _.each states, (value, key) ->
 
 wait.loadUserData = ->
   defered = q.defer()
+  console.warn "start wait load user data"
   setTimeout defered.resolve, 15000
   defered.promise 
 
