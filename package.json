@@ -1,0 +1,27 @@
+{
+  "name": "ali-express-mining",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Assassin4791@mail.ru",
+  "license": "ISC",
+  "dependencies": {
+    "exec": "^0.2.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-jimp": "^1.2.3",
+    "gulp-rm": "^1.0.1",
+    "gulp-util": "^3.0.7",
+    "hash-sum": "^1.0.2",
+    "mkdirp": "^0.5.1",
+    "node-png": "^0.4.3",
+    "q": "^1.4.1",
+    "rimraf": "^2.5.2",
+    "run-sequence": "^1.2.2",
+    "shelljs": "^0.7.0",
+    "underscore": "^1.8.3",
+    "yargs": "^4.8.1"
+  }
+}
