@@ -1,6 +1,7 @@
 gulp = require 'gulp'
 q = require 'q'
 _ = require 'underscore'
+gutil = require 'gulp-util'
 screenShot = require('./screen-shot.coffee').screenShot
 getColorsHash = require('./get-colors-hash.coffee').getColorsHash
 
@@ -9,7 +10,7 @@ states = require('./config.coffee').states
 
 waitState = (state, path, name, condition) ->
   defered = q.defer()
-  console.warn "start wait state #{name}"
+  gutil.log "start wait state #{name}"
   timerId = setTimeout q.reject, 15000
 
   checkState = (state, path) ->
@@ -17,7 +18,7 @@ waitState = (state, path, name, condition) ->
       .then ->
         getColorsHash state.coordinates, path
           .then (hash) ->
-            console.warn hash, state.hash
+            gutil.log hash, state.hash
             if condition hash, state.hash
               clearTimeout timerId
               return defered.resolve()
@@ -36,7 +37,7 @@ _.each states, (value, key) ->
 
 wait.loadUserData = ->
   defered = q.defer()
-  console.warn "start wait load user data"
+  gutil.log "start wait load user data"
   setTimeout defered.resolve, 15000
   defered.promise 
 
