@@ -2,11 +2,13 @@ argv = require('yargs').argv
 
 main = argv.main || '/home/assassin/repositories/ali-express-mining'
 temp = "#{main}/temp"
+out = "#{main}/out.txt"
 waitScreenShot = "#{temp}/wait-screen-shot.png"
 
 exports.paths =
   main: main
   temp: temp
+  out: out
   waitScreenShot: waitScreenShot
 
 exports.deviceAdress = argv.adress || '192.168.11.12:5555'
@@ -71,7 +73,7 @@ exports.states =
       end:
         x: 360
         y: 750
-    hash: '37e4c406'
+    hash: '4a77f54b'#'37e4c406'
   bonus:
     coordinates:
       start:

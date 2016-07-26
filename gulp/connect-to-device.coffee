@@ -1,22 +1,24 @@
 gulp = require 'gulp'
 q = require 'q'
-gutil = require 'gulp-util'
-exec = require 'exec'
+log = require('log4js').getLogger()
+exec = require('./execute.coffee').execute
 
 deviceAdress = require('./config.coffee').deviceAdress
 
 gulp.task 'connect-to-device', ->
+  log.info "connect to device #{deviceAdress}"
   defered = q.defer()
-  exec "adb connect #{deviceAdress}", (err, out, code) ->
-    if (err instanceof Error)
-      gutil.log gutil.colors.red err
+  exec "adb connect #{deviceAdress}"
+    .then (out) ->
+      result = defered.reject
+      if out.search(/(connected to |already connected to )/) > -1
+        log.info "done connect to device #{deviceAdress}"
+        result = defered.resolve
+      else
+        log.error "Not found rows on success, out = #{out}"
+      result()
+    .catch (err) ->
+      log.error "error in connection to device, error = #{err}"
       defered.reject()
       throw err
-    result = defered.reject
-    if out.search(/(connected to |already connected to )/) > -1
-      result = defered.resolve
-    else
-      gutil.log gutil.colors.red out
-    
-    result()
   return defered.promise

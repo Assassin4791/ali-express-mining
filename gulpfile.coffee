@@ -14,13 +14,20 @@ require './gulp/tap-to-coin.coffee'
 require './gulp/disconnect-device.coffee'
 
 
-paths = require('./gulp/config.coffee').paths
+exec = require('./gulp/execute.coffee').execute
+
+gulp.task 'devices-test', ->
+  exec 'adb devices'
 
 gulp.task 'default', (cb) ->
   runSequence 'clean',
-    ['create-dirs', 'connect-to-device']
+    'disconnect-device'
+    'create-dirs'
+    'connect-to-device'
+    'devices-test'
+    'unlock-screen'
     'stop-ali-express'
-    ['unlock-screen', 'run-ali-express']
+    'run-ali-express'
     'run-bonus-page'
     'tap-to-coin'
     'stop-ali-express'

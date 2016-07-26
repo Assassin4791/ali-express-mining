@@ -1,16 +1,16 @@
 gulp = require 'gulp'
 q = require 'q'
-gutil = require 'gulp-util'
-exec = require 'exec'
 fs = require 'fs'
 PNG = require('pngjs').PNG
 hash = require 'hash-sum'
+log = require('log4js').getLogger()
 
 deviceAdress = require('./config.coffee').deviceAdress
 paths = require('./config.coffee').paths
 screen = require('./config.coffee').device.screen
 
 exports.getColorsHash = (coordinates, pathToScreenShot) ->
+  log.debug "start get color hash"
   defered = q.defer()
   fs.createReadStream pathToScreenShot
     .pipe new PNG()
@@ -22,8 +22,11 @@ exports.getColorsHash = (coordinates, pathToScreenShot) ->
           result.push
             r: @.data[idx]
             g: @.data[idx + 1]
-            b: @.data[idx + 2] 
-      defered.resolve hash result
+            b: @.data[idx + 2]
+      resultHash = hash result
+      log.debug "done get color hash = #{resultHash}"
+      defered.resolve resultHash
     .on 'error', (err) ->
+      log.error "error get color hash, err = \n\n#{err}"
       defered.reject err
   defered.promise

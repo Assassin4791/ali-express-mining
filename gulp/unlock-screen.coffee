@@ -1,6 +1,7 @@
 gulp = require 'gulp'
 q = require 'q'
 exec = require('./execute.coffee').execute
+log = require('log4js').getLogger()
 
 deviceAdress = require('./config.coffee').deviceAdress
 coordinates = require('./config.coffee').coordinates.unlockScreen
@@ -13,7 +14,8 @@ tap3 = "adb -s #{deviceAdress} shell input tap #{coordinates[3].x} #{coordinates
 tap4 = "adb -s #{deviceAdress} shell input tap #{coordinates[4].x} #{coordinates[4].y}"
 tap5 = "adb -s #{deviceAdress} shell input tap #{coordinates[5].x} #{coordinates[5].y}"
 
-gulp.task 'unlock-screen',->
+gulp.task 'unlock-screen', ->
+  log.info 'run task "unlock-screen"'
   defered = q.defer()
   exec unlockScreen
     .then -> exec tap1
@@ -21,5 +23,7 @@ gulp.task 'unlock-screen',->
     .then -> exec tap3
     .then -> exec tap4
     .then -> exec tap5
-    .then -> defered.resolve()
+    .then ->
+      log.info 'done task "unlock-screen"'
+      defered.resolve()
   return defered.promise

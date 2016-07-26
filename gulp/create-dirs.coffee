@@ -1,19 +1,20 @@
 gulp = require 'gulp'
 q = require('q')
 mkdirp = require 'mkdirp'
-gutil = require 'gulp-util'
+log = require('log4js').getLogger()
 rm = require 'rimraf'
 
 path = require('./config.coffee').paths.temp
 
 gulp.task 'create-dirs', ->
+  log.info 'start task "create-dirs"'
   defered = q.defer()
   rm.sync path
   mkdirp path, (err) ->
     if err
-      gutil.log gutil.colors.red err
+      log.error "cannot create dirs, err = #{err}"
       defered.reject()
       return
-    gutil.log 'create dir done!'
+    log.info 'task "create-dirs" done'
     defered.resolve()
   defered.promise
